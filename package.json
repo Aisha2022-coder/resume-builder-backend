@@ -1,4 +1,7 @@
 {
+  "scripts": {
+  "start": "node backend/server.js"
+},
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
