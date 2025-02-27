@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import session from "express-session";
+import MongoDBStore from "connect-mongodb-session";
 import passport from "passport";
 import "./config/passport.js";
 import auth from "./routes/auth.js";
@@ -21,15 +22,32 @@ dotenv.config();
 
 const app = express();
 
+const MongoDBStoreSession = MongoDBStore(session);
+const store = new MongoDBStoreSession({
+    uri: process.env.MONGO_URI, 
+    collection: "sessions",
+});
+
+store.on("error", (error) => {
+    console.error("SESSION STORE ERROR:", error);
+});
+
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-    secret: "mysecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
-}));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: store, 
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, 
+            secure: false, 
+            httpOnly: true,
+        },
+    })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/personal-info", personalInfoRoutes);
@@ -46,7 +64,6 @@ mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connected");
-        mongoose.connection.db;
     })
     .catch((err) => console.log("MongoDB Connection Failed:", err));
 
@@ -57,7 +74,7 @@ app.get("/api/auth/user", (req, res) => {
             user: {
                 name: req.user.name,
                 picture: req.user.picture,
-            }
+            },
         });
     } else {
         res.json({ isAuthenticated: false, user: null });

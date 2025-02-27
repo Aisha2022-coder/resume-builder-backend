@@ -7,6 +7,7 @@
     "@google/generative-ai": "^0.22.0",
     "axios": "^1.7.9",
     "connect-mongo": "^5.1.0",
+    "connect-mongodb-session": "^5.0.0",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -23,7 +24,6 @@
   "version": "1.0.0",
   "description": "Backend for Resume-Builder",
   "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Aisha2022-coder/resume-builder-backend.git"
