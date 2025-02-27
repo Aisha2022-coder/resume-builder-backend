@@ -1,7 +1,7 @@
 {
   "scripts": {
-  "start": "node backend/server.js"
-},
+    "start": "node backend/server.js"
+  },
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
@@ -18,5 +18,26 @@
     "openai": "^4.85.3",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0"
-  }
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for Resume-Builder",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aisha2022-coder/resume-builder-backend.git"
+  },
+  "keywords": [
+    "backend",
+    "nodejs",
+    "express",
+    "resume-builder"
+  ],
+  "author": "Aisha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Aisha2022-coder/resume-builder-backend/issues"
+  },
+  "homepage": "https://github.com/Aisha2022-coder/resume-builder-backend#readme"
 }
