@@ -13,7 +13,7 @@ router.get(
     }
 );
 
-router.get("/user", (req, res) => {
+router.get("/api/auth/user", (req, res) => {
     if (req.isAuthenticated()) {
         res.json({
             isAuthenticated: true,
