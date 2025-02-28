@@ -10,9 +10,12 @@ router.get(
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
-        res.redirect(`${FRONTEND_URL}/dashboard`);
+      req.session.save((err) => {
+        res.redirect(`${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard`);
+      });
     }
-);
+  );
+  
 
 router.get("/user", (req, res) => {
     if (req.isAuthenticated()) {
@@ -31,7 +34,7 @@ router.get("/logout", (req, res, next) => {
         if (err) return next(err);
         req.session.destroy((err) => {
             if (err) return next(err);
-            res.clearCookie("connect.sid", { path: "/" });
+            res.clearCookie("resume.builder.sid", { path: "/" });
             return res.status(200).json({ message: "Logged out successfully" });
         });
     });
