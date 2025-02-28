@@ -27,10 +27,6 @@ const store = new MongoDBStoreSession({
     uri: process.env.MONGO_URI,
     collection: "sessions",
     expires: 1000 * 60 * 60 * 24,
-    connectionOptions: {
-        ssl: true,
-        sslValidate: true,
-    }
 });
 
 store.on("error", (error) => {
@@ -75,10 +71,7 @@ app.use("/api/auth", auth);
 app.use("/api/resume", resumeRoutes);
 
 mongoose
-    .connect(process.env.MONGO_URI, {
-        ssl: true,
-        sslValidate: true,
-    })
+    .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connected");
     })
