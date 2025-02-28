@@ -13,7 +13,6 @@ router.get(
     req.session.save((err) => {
       if (err) {
         console.error("Session save error:", err);
-        // Agar error critical ho, to aap error page ya failureRedirect de sakti hain.
       }
       res.redirect(`${FRONTEND_URL}/dashboard`);
     });
