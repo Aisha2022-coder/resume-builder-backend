@@ -3,6 +3,8 @@ import passport from 'passport';
 
 const router = express.Router();
 
+app.use('/api', router);
+
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get(
@@ -13,7 +15,7 @@ router.get(
     }
 );
 
-router.get("/api/auth/user", (req, res) => {
+router.get("/auth/user", (req, res) => {
     if (req.isAuthenticated()) {
         res.json({
             isAuthenticated: true,
