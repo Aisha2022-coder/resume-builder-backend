@@ -53,7 +53,6 @@ app.use(
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             httpOnly: true,
             path: '/',
-            domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined 
         },
         name: 'resume.builder.sid'
     })
