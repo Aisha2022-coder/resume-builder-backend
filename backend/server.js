@@ -6,7 +6,7 @@ import session from "express-session";
 import MongoDBStore from "connect-mongodb-session";
 import passport from "passport";
 import "./config/passport.js";
-import auth from "./routes/auth.js";
+import auth from "./routes/auth.js"
 import "./models/User.js";
 import axios from "axios";
 import personalInfoRoutes from "./routes/personalInfo.js";
@@ -24,15 +24,25 @@ const app = express();
 
 const MongoDBStoreSession = MongoDBStore(session);
 const store = new MongoDBStoreSession({
-    uri: process.env.MONGO_URI, 
+    uri: process.env.MONGO_URI,
     collection: "sessions",
+    expires: 1000 * 60 * 60 * 24,
+    connectionOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
 });
 
 store.on("error", (error) => {
     console.error("SESSION STORE ERROR:", error);
 });
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ 
+    origin: FRONTEND_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -40,12 +50,16 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
-        store: store, 
+        store: store,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24, 
-            secure: false, 
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             httpOnly: true,
+            path: '/',
+            domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined 
         },
+        name: 'resume.builder.sid'
     })
 );
 app.use(passport.initialize());

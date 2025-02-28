@@ -6,12 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5000";
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/api/auth/google/callback",
+      callbackURL: `${BACKEND_URL}/api/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

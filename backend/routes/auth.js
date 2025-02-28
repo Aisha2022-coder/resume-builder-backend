@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 
 const router = express.Router();
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
@@ -9,7 +10,7 @@ router.get(
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
-        res.redirect("http://localhost:3000/dashboard");
+        res.redirect(`${FRONTEND_URL}/dashboard`);
     }
 );
 
