@@ -28,8 +28,8 @@ const store = new MongoDBStoreSession({
     collection: "sessions",
     expires: 1000 * 60 * 60 * 24,
     connectionOptions: {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        ssl: true,
+        sslValidate: true,
     }
 });
 
@@ -75,7 +75,10 @@ app.use("/api/auth", auth);
 app.use("/api/resume", resumeRoutes);
 
 mongoose
-    .connect(process.env.MONGO_URI)
+    .connect(process.env.MONGO_URI, {
+        ssl: true,
+        sslValidate: true,
+    })
     .then(() => {
         console.log("MongoDB connected");
     })
