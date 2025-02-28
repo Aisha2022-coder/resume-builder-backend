@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5000";
-
 passport.use(
   new GoogleStrategy(
     {
