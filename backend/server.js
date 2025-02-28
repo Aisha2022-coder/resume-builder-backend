@@ -53,7 +53,7 @@ app.use(
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             httpOnly: true,
             path: '/',
-        },        
+        },               
         name: 'resume.builder.sid'
     })
 );
