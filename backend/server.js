@@ -48,12 +48,12 @@ app.use(
         saveUninitialized: true,
         store: store,
         cookie: {
-            maxAge: 1000 * 60 * 60 * 24, 
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 1000 * 60 * 60 * 24,
+            secure: true,
+            sameSite: 'none',
             httpOnly: true,
             path: '/',
-        },               
+        },                       
         name: 'resume.builder.sid'
     })
 );
