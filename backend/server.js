@@ -20,8 +20,6 @@ import resumeRoutes from "./routes/resume.js";
 
 dotenv.config();
 
-console.log(process.env.NODE_ENV) 
-
 const app = express();
 
 const MongoDBStoreSession = MongoDBStore(session);
